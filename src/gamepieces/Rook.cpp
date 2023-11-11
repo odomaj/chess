@@ -9,3 +9,12 @@ char Rook_t::getColor()
 {
     return color;
 }
+
+char Rook_t::serialize()
+{
+    if(color == WHITE)
+    {
+        return WHITE_ROOK;
+    }
+    return BLACK_ROOK;
+}

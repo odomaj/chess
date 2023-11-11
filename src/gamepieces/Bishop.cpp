@@ -9,3 +9,12 @@ char Bishop_t::getColor()
 {
     return color;
 }
+
+char Bishop_t::serialize()
+{
+    if(color == WHITE)
+    {
+        return WHITE_BISHOP;
+    }
+    return BLACK_BISHOP;
+}

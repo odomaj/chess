@@ -3,5 +3,6 @@
 int main()
 {
     GameBoard_t board;
+    board.print();
     return 0;
 }

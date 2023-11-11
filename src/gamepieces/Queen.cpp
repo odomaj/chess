@@ -9,3 +9,12 @@ char Queen_t::getColor()
 {
     return color;
 }
+
+char Queen_t::serialize()
+{
+    if(color == WHITE)
+    {
+        return WHITE_QUEEN;
+    }
+    return BLACK_QUEEN;
+}

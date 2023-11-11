@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iostream>
 #include "GameBoard.h"
 
 GameBoard_t::GameBoard_t()
@@ -61,4 +63,24 @@ void GameBoard_t::clear()
             delete board[i][j];
         }
     }
+}
+
+std::string GameBoard_t::serializeBoard()
+{
+    std::ostringstream oss;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            oss << board[i][j] -> serialize();
+        }
+    }
+    return oss.str();
+}
+
+void GameBoard_t::print()
+{
+    std::string serializedBoard = serializeBoard();
+    //std::cout << serializedBoard.data() << '\n';
+    io.printBoard(serializedBoard.data());
 }

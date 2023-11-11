@@ -8,6 +8,7 @@ class Pawn_t : public Piece_t
     public:
     Pawn_t(char color_);
     char getColor();
+    char serialize();
     private:
     char color;
 };

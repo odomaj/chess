@@ -8,6 +8,7 @@ class Queen_t : public Piece_t
     public:
     Queen_t(char color_);
     char getColor();
+    char serialize();
     private:
     char color;
 };

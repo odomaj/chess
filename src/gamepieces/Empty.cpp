@@ -9,3 +9,8 @@ char Empty_t::getColor()
 {
     return EMPTY;
 }
+
+char Empty_t::serialize()
+{
+    return EMPTY;
+}

@@ -9,3 +9,12 @@ char Knight_t::getColor()
 {
     return color;
 }
+
+char Knight_t::serialize()
+{
+    if(color == WHITE)
+    {
+        return WHITE_KNIGHT;
+    }
+    return BLACK_KNIGHT;
+}
