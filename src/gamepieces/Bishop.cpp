@@ -1,0 +1,11 @@
+#include "Bishop.h"
+
+Bishop_t::Bishop_t(char color_)
+{
+    color = color_;
+}
+
+char Bishop_t::getColor()
+{
+    return color;
+}
