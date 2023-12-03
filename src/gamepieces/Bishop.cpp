@@ -42,7 +42,6 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
         }
     }
 
-    move.start = currentTile;
     move.end = currentTile;
     while(true)
     {
@@ -60,7 +59,6 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
         }
     }
 
-    move.start = currentTile;
     move.end = currentTile;
     while(true)
     {
@@ -78,7 +76,6 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
         }
     }
 
-    move.start = currentTile;
     move.end = currentTile;
     while(true)
     {
@@ -95,6 +92,8 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
             break;
         }
     }
+
+    return tiles;
 }
 
 void Bishop_t::move(Tile_t tile){}

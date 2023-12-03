@@ -120,4 +120,5 @@ StaticBoard_t GameBoard_t::getBoard()
             staticBoard.pieces[i][j] = board[i][j] -> serialize();
         }
     }
+    return staticBoard;
 }

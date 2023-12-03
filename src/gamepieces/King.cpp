@@ -21,7 +21,76 @@ char King_t::serialize()
 
 std::list<Tile_t> King_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
 {
+    std::list<Tile_t> tiles;
+    Move_t move;
     
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.x++;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.end = currentTile;
+    move.end.x++;
+    move.end.y++;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.end = currentTile;
+    move.end.x++;
+    move.end.y--;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.x--;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.x--;
+    move.end.y++;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.x--;
+    move.end.y--;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.y++;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    move.end.y--;
+    if(collision(move, board) != 0)
+    {
+        tiles.push_back(move.end);
+    }
+
+    return tiles;
 }
 
 void King_t::move(Tile_t tile)
