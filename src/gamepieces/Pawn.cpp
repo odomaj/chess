@@ -33,19 +33,19 @@ std::list<Tile_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     move.end = currentTile;
 
     move.end.y += direction;
-    if(collision(move, board) == 0)
+    if(collision(move, board) == 2)
     {
         tiles.push_back(move.end);
     }
 
     move.end.x++;
-    if(collision(move, board) == 0)
+    if(collision(move, board) == 1)
     {
         tiles.push_back(move.end);
     }
 
     move.end.x-=2;
-    if(collision(move, board) == 0)
+    if(collision(move, board) == 1)
     {
         tiles.push_back(move.end);
     }
@@ -53,19 +53,7 @@ std::list<Tile_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     if(!hasMoved)
     {
         move.end.y += direction;
-        if(collision(move, board) == 0)
-        {
-            tiles.push_back(move.end);
-        }
-
-        move.end.x+= 2;
-        if(collision(move, board) == 0)
-        {
-            tiles.push_back(move.end);
-        }
-
-        move.end.x-=2;
-        if(collision(move, board) == 0)
+        if(collision(move, board) == 2)
         {
             tiles.push_back(move.end);
         }
