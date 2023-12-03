@@ -18,3 +18,13 @@ char Rook_t::serialize()
     }
     return BLACK_ROOK;
 }
+
+std::list<Tile_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+{
+    
+}
+
+void Rook_t::move(Tile_t tile)
+{
+    hasMoved = true;
+}

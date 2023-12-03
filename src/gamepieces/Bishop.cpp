@@ -18,3 +18,83 @@ char Bishop_t::serialize()
     }
     return BLACK_BISHOP;
 }
+
+std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+{
+    std::list<Tile_t> tiles;
+    Move_t move;
+    
+    move.start = currentTile;
+    move.end = currentTile;
+    while(true)
+    {
+        move.end.x++;
+        move.end.y++;
+        int collision_ = collision(move, board);
+        if(collision_ == 0)
+        {
+            break;
+        }
+        tiles.push_back(move.end);
+        if(collision_ == 1)
+        {
+            break;
+        }
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    while(true)
+    {
+        move.end.x++;
+        move.end.y--;
+        int collision_ = collision(move, board);
+        if(collision_ == 0)
+        {
+            break;
+        }
+        tiles.push_back(move.end);
+        if(collision_ == 1)
+        {
+            break;
+        }
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    while(true)
+    {
+        move.end.x--;
+        move.end.y++;
+        int collision_ = collision(move, board);
+        if(collision_ == 0)
+        {
+            break;
+        }
+        tiles.push_back(move.end);
+        if(collision_ == 1)
+        {
+            break;
+        }
+    }
+
+    move.start = currentTile;
+    move.end = currentTile;
+    while(true)
+    {
+        move.end.x--;
+        move.end.y--;
+        int collision_ = collision(move, board);
+        if(collision_ == 0)
+        {
+            break;
+        }
+        tiles.push_back(move.end);
+        if(collision_ == 1)
+        {
+            break;
+        }
+    }
+}
+
+void Bishop_t::move(Tile_t tile){}

@@ -22,6 +22,8 @@ class GameBoard_t
     void reset();
     std::string serializeBoard();
     void print();
+    std::list<Move_t> getAllMoves();
+    StaticBoard_t getBoard();
     private:
     Piece_t* board[8][8];
     IO io;

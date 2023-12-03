@@ -18,3 +18,10 @@ char Queen_t::serialize()
     }
     return BLACK_QUEEN;
 }
+
+std::list<Tile_t> Queen_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+{
+    
+}
+
+void Queen_t::move(Tile_t tile){}

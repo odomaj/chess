@@ -18,3 +18,10 @@ char Knight_t::serialize()
     }
     return BLACK_KNIGHT;
 }
+
+std::list<Tile_t> Knight_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+{
+    
+}
+
+void Knight_t::move(Tile_t tile){}

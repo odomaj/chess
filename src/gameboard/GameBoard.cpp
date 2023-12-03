@@ -81,6 +81,43 @@ std::string GameBoard_t::serializeBoard()
 void GameBoard_t::print()
 {
     std::string serializedBoard = serializeBoard();
-    //std::cout << serializedBoard.data() << '\n';
     io.printBoard(serializedBoard.data());
+}
+
+std::list<Move_t> GameBoard_t::getAllMoves()
+{
+    std::list<Move_t> moves;
+    StaticBoard_t staticBoard = getBoard();
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            Tile_t tile;
+            tile.x = j;
+            tile.y = i;
+            std::list<Tile_t> newTiles = board[i][j] -> getMoves(tile, staticBoard);
+            for(auto it = newTiles.begin(); it != newTiles.end(); it++)
+            {
+                Move_t move;
+                move.start = tile;
+                move.end = *it;
+                move.piece = board[i][j] -> serialize();
+                moves.push_back(move);
+            }
+        }
+    }
+    return moves;
+}
+
+StaticBoard_t GameBoard_t::getBoard()
+{
+    StaticBoard_t staticBoard;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            staticBoard.colors[i][j] = board[i][j] -> getColor();
+            staticBoard.pieces[i][j] = board[i][j] -> serialize();
+        }
+    }
 }

@@ -18,3 +18,13 @@ char King_t::serialize()
     }
     return BLACK_KING;
 }
+
+std::list<Tile_t> King_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+{
+    
+}
+
+void King_t::move(Tile_t tile)
+{
+    hasMoved = true;
+}
