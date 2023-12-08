@@ -1,44 +1,49 @@
 #include "Util.h"
 
-int collision(const Move_t& move, const StaticBoard_t& board)
+char collision(const Move_t& move, const StaticBoard_t& board)
 {
+    if(move.end.x > 7 || move.end.x < 0 || move.end.y > 7 || move.end.y < 0)
+    {
+        return COLLISION_WITH_TEAM;
+    }
+    
     char color;
     switch (move.piece)
     {
-    case 'p':
+    case WHITE_PAWN:
         color = WHITE;
         break;
-    case 'r':
+    case WHITE_ROOK:
         color = WHITE;
         break;
-    case 'n':
+    case WHITE_KNIGHT:
         color = WHITE;
         break;
-    case 'b':
+    case WHITE_BISHOP:
         color = WHITE;
         break;
-    case 'q':
+    case WHITE_QUEEN:
         color = WHITE;
         break;
-    case 'k':
+    case WHITE_KING:
         color = WHITE;
         break;
-    case 'P':
+    case BLACK_PAWN:
         color = BLACK;
         break;
-    case 'R':
+    case BLACK_ROOK:
         color = BLACK;
         break;
-    case 'N':
+    case BLACK_KNIGHT:
         color = BLACK;
         break;
-    case 'B':
+    case BLACK_BISHOP:
         color = BLACK;
         break;
-    case 'Q':
+    case BLACK_QUEEN:
         color = BLACK;
         break;
-    case 'K':
+    case BLACK_KING:
         color = BLACK;
         break;
     default:
@@ -48,13 +53,23 @@ int collision(const Move_t& move, const StaticBoard_t& board)
 
     if(board.colors[move.end.y][move.end.x] == EMPTY)
     {
-        return 2;
+        return NO_COLLISION;
     }
 
     if(board.colors[move.end.y][move.end.x] == color)
     {
-        return 0;
+        return COLLISION_WITH_TEAM;
     }
 
-    return 1;
+    return COLLISION_WITH_OPPONENT;
+}
+
+bool operator==(const Tile_t& tile1, const Tile_t& tile2)
+{
+    return tile1.x == tile2.x && tile1.y == tile2.y;
+}
+
+bool operator==(const Move_t& move1, const Move_t& move2)
+{
+    return move1.start == move2.start && move1.end == move2.end;
 }

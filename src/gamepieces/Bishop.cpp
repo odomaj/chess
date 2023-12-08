@@ -19,24 +19,25 @@ char Bishop_t::serialize()
     return BLACK_BISHOP;
 }
 
-std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+std::list<Move_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
 {
-    std::list<Tile_t> tiles;
+    std::list<Move_t> moves;
     Move_t move;
     
     move.start = currentTile;
     move.end = currentTile;
+    move.piece = serialize();
     while(true)
     {
         move.end.x++;
         move.end.y++;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -47,13 +48,13 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
     {
         move.end.x++;
         move.end.y--;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -64,13 +65,13 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
     {
         move.end.x--;
         move.end.y++;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -81,19 +82,24 @@ std::list<Tile_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
     {
         move.end.x--;
         move.end.y--;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
     }
 
-    return tiles;
+    return moves;
 }
 
 void Bishop_t::move(Tile_t tile){}
+
+bool Bishop_t::hasMoved()
+{
+    return false;
+}

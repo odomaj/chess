@@ -9,11 +9,12 @@ class King_t : public Piece_t
     King_t(char color_);
     char getColor();
     char serialize();
-    std::list<Tile_t> getMoves(Tile_t currentTile, const StaticBoard_t& board);
+    std::list<Move_t> getMoves(Tile_t currentTile, const StaticBoard_t& board);
     void move(Tile_t tile);
+    bool hasMoved();
     private:
     char color;
-    bool hasMoved;
+    bool hasMoved_;
 };
 
 #endif

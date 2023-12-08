@@ -3,7 +3,7 @@
 Pawn_t::Pawn_t(char color_)
 {
     color = color_;
-    hasMoved = false;
+    hasMoved_ = false;
 }
 
 char Pawn_t::getColor()
@@ -20,9 +20,9 @@ char Pawn_t::serialize()
     return BLACK_PAWN;
 }
 
-std::list<Tile_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+std::list<Move_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
 {
-    std::list<Tile_t> tiles;
+    std::list<Move_t> moves;
     Move_t move;
     int direction = 1;
     if(board.colors[currentTile.y][currentTile.x] == WHITE)
@@ -31,37 +31,44 @@ std::list<Tile_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     }
     move.start = currentTile;
     move.end = currentTile;
+    move.piece = serialize();
 
     move.end.y += direction;
-    if(collision(move, board) == 2)
+    if(collision(move, board) == NO_COLLISION)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
     move.end.x++;
-    if(collision(move, board) == 1)
+    if(collision(move, board) == COLLISION_WITH_OPPONENT)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
     move.end.x-=2;
-    if(collision(move, board) == 1)
+    if(collision(move, board) == COLLISION_WITH_OPPONENT)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
-    if(!hasMoved)
+    if(!hasMoved_)
     {
+        move.end.x++;
         move.end.y += direction;
-        if(collision(move, board) == 2)
+        if(collision(move, board) == NO_COLLISION)
         {
-            tiles.push_back(move.end);
+            moves.push_back(move);
         }
     }
-    return tiles; 
+    return moves; 
 }
 
 void Pawn_t::move(Tile_t tile)
 {
-    hasMoved = true;
+    hasMoved_ = true;
+}
+
+bool Pawn_t::hasMoved()
+{
+    return hasMoved_;
 }

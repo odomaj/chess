@@ -78,12 +78,12 @@ std::string GameBoard_t::serializeBoard()
     return oss.str();
 }
 
-void GameBoard_t::print()
-{
-    std::string serializedBoard = serializeBoard();
-    io.printBoard(serializedBoard.data());
-}
-
+/*
+    loops through all spaces on the board
+    asks every piece for all of its possible moves and adds them to the list
+    return the completed list
+    does not account for check
+*/
 std::list<Move_t> GameBoard_t::getAllMoves()
 {
     std::list<Move_t> moves;
@@ -95,20 +95,44 @@ std::list<Move_t> GameBoard_t::getAllMoves()
             Tile_t tile;
             tile.x = j;
             tile.y = i;
-            std::list<Tile_t> newTiles = board[i][j] -> getMoves(tile, staticBoard);
-            for(auto it = newTiles.begin(); it != newTiles.end(); it++)
-            {
-                Move_t move;
-                move.start = tile;
-                move.end = *it;
-                move.piece = board[i][j] -> serialize();
-                moves.push_back(move);
-            }
+            std::list<Move_t> newMoves = board[i][j] -> getMoves(tile, staticBoard);
+            moves.splice(moves.end(), newMoves);
         }
     }
     return moves;
 }
 
+/*
+    loops through all spaces on the board
+    if a given is of the given color, asks for all of its possible moves and adds them to the list
+    return the completed list
+    does not account for check
+*/
+std::list<Move_t> GameBoard_t::getAllMoves(char color)
+{
+    std::list<Move_t> moves;
+    StaticBoard_t staticBoard = getBoard();
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            if(board[i][j] -> getColor() != color)
+            {
+                continue;
+            }
+            Tile_t tile;
+            tile.x = j;
+            tile.y = i;
+            std::list<Move_t> newMoves = board[i][j] -> getMoves(tile, staticBoard);
+            moves.splice(moves.end(), newMoves);
+        }
+    }
+    return moves;
+}
+
+/*
+    generates a static board from the board
+*/
 StaticBoard_t GameBoard_t::getBoard()
 {
     StaticBoard_t staticBoard;
@@ -121,4 +145,115 @@ StaticBoard_t GameBoard_t::getBoard()
         }
     }
     return staticBoard;
+}
+
+/*
+    finds all possible moves for the opponent color
+    finds the given colors king
+    checks if any possible moves by the opponent land on the king's position
+*/
+bool GameBoard_t::isInCheck(char color)
+{
+    char opponentsColor = WHITE;
+    if(color == WHITE)
+    {
+        opponentsColor = BLACK;
+    }
+    std::list<Move_t> opponentsMoves = getAllMoves(opponentsColor);
+    
+    Tile_t kingTile;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            if(board[i][j] -> getColor() == color)
+            {
+                char piece = board[i][j] -> serialize();
+                if(piece == WHITE_KING || piece == BLACK_KING)
+                {
+                    kingTile.x = j;
+                    kingTile.y = i;
+                }
+            }
+        }
+    }
+
+    for(auto it = opponentsMoves.begin(); it != opponentsMoves.end(); it++)
+    {
+        if(it -> end.x == kingTile.x && it -> end.y == kingTile.y)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/*
+    uses getAllMoves to get all possible moves, then uses checkMove to remove any moves that lead to a check
+*/
+std::list<Move_t> GameBoard_t::getLegalMoves(char color)
+{
+    std::list<Move_t> allMoves = getAllMoves(color);
+    auto it = allMoves.begin();
+    while(it != allMoves.end())
+    {
+        if(!testMove(*it))
+        {
+            allMoves.erase(it);
+        }
+        else{
+            it++;
+        }
+    }
+    return allMoves;
+}
+
+/*
+    deletes the piece in the end position
+    has the end position point to the piece in the start position
+    makes a new empty space for the start position to point to
+*/
+void GameBoard_t::performMove(Move_t& move)
+{
+    delete board[move.end.y][move.end.x];
+    board[move.end.y][move.end.x] = board[move.start.y][move.start.x];
+    board[move.start.y][move.start.x] = new Empty_t();
+}
+
+/*
+    returns true if move is vaild
+    returns false if the move leads to a check
+*/
+bool GameBoard_t::testMove(Move_t& move)
+{
+    Piece_t* endPiece = board[move.end.y][move.end.x];
+    Piece_t* startPiece = board[move.start.y][move.start.x];
+    Piece_t* emptySpace = new Empty_t();
+    board[move.end.y][move.end.x] = startPiece;
+    board[move.start.y][move.start.x] = emptySpace;
+    bool inCheck = isInCheck(startPiece -> getColor());
+    board[move.end.y][move.end.x] = endPiece;
+    board[move.start.y][move.start.x] = startPiece;
+    delete emptySpace;
+    return !inCheck;
+}
+
+/*
+    attempt to perform a move
+    if the move is possible, perform the move and return true
+    otherwise return false
+*/
+bool GameBoard_t::move(Move_t& move, char color)
+{
+    std::list<Move_t> moves = getLegalMoves(color);
+    for(auto it = moves.begin(); it != moves.end(); it++)
+    {
+        if(*it == move)
+        {
+            performMove(*it);
+            return true;
+        }
+    }
+    return false;
 }

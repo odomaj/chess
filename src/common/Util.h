@@ -40,8 +40,16 @@ const char BLACK_BISHOP = 'B';
 const char BLACK_QUEEN = 'Q';
 const char BLACK_KING = 'K';
 
+const char NO_COLLISION = 0;
+const char COLLISION_WITH_OPPONENT = 1;
+const char COLLISION_WITH_TEAM = 2;
+
 const int SERIALIZED_PIECE_BYTE_COUNT = 1;
 
-int collision(const Move_t& move, const StaticBoard_t& board);
+char collision(const Move_t& move, const StaticBoard_t& board);
+
+bool operator==(const Tile_t& tile1, const Tile_t& tile2);
+
+bool operator==(const Move_t& move1, const Move_t& move2);
 
 #endif

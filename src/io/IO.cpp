@@ -6,7 +6,7 @@ IO::IO()
 
 }
 
-void IO::printBoard(const char* serialized_board)
+void IO::printBoard(const std::string& serializedBoard)
 {
     for(int i = 0; i < 8; i++)
     {
@@ -17,7 +17,7 @@ void IO::printBoard(const char* serialized_board)
                 int index = 8 * SERIALIZED_PIECE_BYTE_COUNT * i;
                 index += j * SERIALIZED_PIECE_BYTE_COUNT;
                 index += k;
-                std::cout << serialized_board[index]; 
+                std::cout << serializedBoard[index]; 
             }
         }
         std::cout << '\n';

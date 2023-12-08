@@ -19,70 +19,76 @@ char Knight_t::serialize()
     return BLACK_KNIGHT;
 }
 
-std::list<Tile_t> Knight_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+std::list<Move_t> Knight_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
 {
-    std::list<Tile_t> tiles;
+    std::list<Move_t> moves;
     Move_t move;
 
     move.start = currentTile;
     move.end = currentTile;
+    move.piece = serialize();
 
     move.end.x += 2;
     move.end.y++;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
     
     move.end.y -= 2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
     move.end = currentTile;
     move.end.x -= 2;
     move.end.y++;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
     
     move.end.y -= 2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
     move.end = currentTile;
     move.end.x++;
     move.end.y += 2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
     
     move.end.x -= 2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
     move.end = currentTile;
     move.end.x++;
     move.end.y+=2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
     
     move.end.x -= 2;
-    if(collision(move, board) != 0)
+    if(collision(move, board) != COLLISION_WITH_TEAM)
     {
-        tiles.push_back(move.end);
+        moves.push_back(move);
     }
 
-    return tiles;
+    return moves;
 }
 
 void Knight_t::move(Tile_t tile){}
+
+bool Knight_t::hasMoved()
+{
+    return false;
+}

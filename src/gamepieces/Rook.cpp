@@ -1,8 +1,9 @@
 #include "Rook.h"
-
+#include <iostream>
 Rook_t::Rook_t(char color_)
 {
     color = color_;
+    hasMoved_ = false;
 }
 
 char Rook_t::getColor()
@@ -19,23 +20,24 @@ char Rook_t::serialize()
     return BLACK_ROOK;
 }
 
-std::list<Tile_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
+std::list<Move_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& board)
 {
-    std::list<Tile_t> tiles;
+    std::list<Move_t> moves;
     Move_t move;
     
     move.start = currentTile;
     move.end = currentTile;
+    move.piece = serialize();
     while(true)
     {
         move.end.x++;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -45,13 +47,13 @@ std::list<Tile_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     while(true)
     {
         move.end.x--;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -61,13 +63,13 @@ std::list<Tile_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     while(true)
     {
         move.end.y++;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
@@ -77,22 +79,27 @@ std::list<Tile_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     while(true)
     {
         move.end.y--;
-        int collision_ = collision(move, board);
-        if(collision_ == 0)
+        char collision_ = collision(move, board);
+        if(collision_ == COLLISION_WITH_TEAM)
         {
             break;
         }
-        tiles.push_back(move.end);
-        if(collision_ == 1)
+        moves.push_back(move);
+        if(collision_ == COLLISION_WITH_OPPONENT)
         {
             break;
         }
     }
 
-    return tiles;
+    return moves;
 }
 
 void Rook_t::move(Tile_t tile)
 {
-    hasMoved = true;
+    hasMoved_ = true;
+}
+
+bool Rook_t::hasMoved()
+{
+    return hasMoved_;
 }
