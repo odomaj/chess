@@ -8,6 +8,7 @@ class Executive
 {
     public:
     Executive();
+    ~Executive();
     void run();
     private:
     IO* io;

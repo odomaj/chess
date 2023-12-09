@@ -46,8 +46,8 @@ Move_t IO::getMove()
     {
         loop = false;
         std::cout << "Please enter move as (x1, y1) to (x2, y2)...\n";
-        std::string str = "(1, 6) to (1, 4)";
-        //std::getline(std::cin, str);
+        std::string str;
+        std::getline(std::cin, str);
         std::cout << "You entered: (" << str[1] << ", " << str[4] << ") to (" << str[11] << ", " << str[14] << ")\n";
         move.start.x = (int)(str[1] - '0');
         move.start.y = (int)(str[4] - '0');

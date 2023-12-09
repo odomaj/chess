@@ -11,7 +11,7 @@ class Piece_t
     virtual char getColor() = 0;
     virtual char serialize() = 0;
     virtual std::list<Move_t> getMoves(Tile_t currentTile, const StaticBoard_t& board) = 0;
-    virtual void move(Tile_t tile) = 0;
+    virtual void move() = 0;
     virtual bool hasMoved() = 0;
 };
 

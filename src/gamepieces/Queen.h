@@ -10,7 +10,7 @@ class Queen_t : public Piece_t
     char getColor();
     char serialize();
     std::list<Move_t> getMoves(Tile_t currentTile, const StaticBoard_t& board);
-    void move(Tile_t tile);
+    void move();
     bool hasMoved();
     private:
     char color;

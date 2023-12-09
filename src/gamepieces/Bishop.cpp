@@ -97,7 +97,7 @@ std::list<Move_t> Bishop_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
     return moves;
 }
 
-void Bishop_t::move(Tile_t tile){}
+void Bishop_t::move(){}
 
 bool Bishop_t::hasMoved()
 {

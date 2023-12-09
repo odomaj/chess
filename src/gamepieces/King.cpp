@@ -94,7 +94,7 @@ std::list<Move_t> King_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     return moves;
 }
 
-void King_t::move(Tile_t tile)
+void King_t::move()
 {
     hasMoved_ = true;
 }

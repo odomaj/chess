@@ -7,6 +7,12 @@ Executive::Executive()
     io = new IO();
 }
 
+Executive::~Executive()
+{
+    delete board;
+    delete io;
+}
+
 void Executive::run()
 {
     while(true)
@@ -15,7 +21,7 @@ void Executive::run()
         io -> printBoard(serializedBoard);
         Move_t move = io -> getMove();
         board -> move(move, WHITE);
+        serializedBoard = board -> serializeBoard();
         io -> printBoard(serializedBoard);
-        break;
     }
 }

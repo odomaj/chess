@@ -63,7 +63,7 @@ std::list<Move_t> Pawn_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     return moves; 
 }
 
-void Pawn_t::move(Tile_t tile)
+void Pawn_t::move()
 {
     hasMoved_ = true;
 }

@@ -161,7 +161,7 @@ std::list<Move_t> Queen_t::getMoves(Tile_t currentTile, const StaticBoard_t& boa
     return moves;
 }
 
-void Queen_t::move(Tile_t tile){}
+void Queen_t::move(){}
 
 bool Queen_t::hasMoved()
 {

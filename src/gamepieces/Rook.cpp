@@ -94,7 +94,7 @@ std::list<Move_t> Rook_t::getMoves(Tile_t currentTile, const StaticBoard_t& boar
     return moves;
 }
 
-void Rook_t::move(Tile_t tile)
+void Rook_t::move()
 {
     hasMoved_ = true;
 }

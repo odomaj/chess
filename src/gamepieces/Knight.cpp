@@ -71,7 +71,7 @@ std::list<Move_t> Knight_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
 
     move.end = currentTile;
     move.end.x++;
-    move.end.y+=2;
+    move.end.y-=2;
     if(collision(move, board) != COLLISION_WITH_TEAM)
     {
         moves.push_back(move);
@@ -86,7 +86,7 @@ std::list<Move_t> Knight_t::getMoves(Tile_t currentTile, const StaticBoard_t& bo
     return moves;
 }
 
-void Knight_t::move(Tile_t tile){}
+void Knight_t::move(){}
 
 bool Knight_t::hasMoved()
 {

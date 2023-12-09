@@ -20,7 +20,7 @@ std::list<Move_t> Empty_t::getMoves(Tile_t currentTile, const StaticBoard_t& boa
     return std::list<Move_t>();
 }
 
-void Empty_t::move(Tile_t tile){}
+void Empty_t::move(){}
 
 bool Empty_t::hasMoved()
 {
