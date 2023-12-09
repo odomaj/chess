@@ -259,7 +259,6 @@ bool GameBoard_t::move(const Move_t& move, char color)
     std::list<Move_t> moves = getLegalMoves(color);
     for(auto it = moves.begin(); it != moves.end(); it++)
     {
-        std::cout << it -> start.x << it -> start.y << it -> end.x << it -> end.y << '\n';
         if(*it == move)
         {
             performMove(*it);
@@ -290,7 +289,7 @@ Piece_t* GameBoard_t::generatePiece(char serializedPiece, Tile_t tile)
     case WHITE_PAWN:
     {
         Piece_t* piece = new Pawn_t(WHITE);
-        if(tile.y != 1)
+        if(tile.y != 6)
         {
             piece -> move();
         }

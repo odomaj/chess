@@ -2,9 +2,19 @@
 
 #include <iostream>
 
+Minimax::Minimax()
+{
+
+}
+
+Minimax::~Minimax()
+{
+
+}
+
 Move_t Minimax::getMove(const StaticBoard_t& board, char color)
 {
-    player = color;
+    player = BLACK;
     alpha = INT32_MIN;
     beta = INT32_MAX;
     State_t state;
@@ -33,12 +43,15 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
 
     State_t nextState;
     nextState.score = 0;
+    nextState.player = state.player;
 
     if(state.move.start.x != -1 || state.move.start.y != -1 || state.move.end.x != -1 || state.move.end.y != -1)
     {
-        if(depth++ > MAX_SEARCH_DEPTH)
+        if(++depth > MAX_SEARCH_DEPTH)
         {
-            nextState.score = heuristic.heuristic(board, state.move, state.player);
+            StaticBoard_t staticBoard = board.getBoard();
+            nextState.score = heuristic.heuristic(staticBoard, state.move, state.player);
+            nextState.move = state.move;
             return nextState;
         }
 
@@ -47,55 +60,65 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
             std::cout << "bad\n";
             return nextState;
         }
+
+        nextState.player = WHITE;
+        if(state.player == WHITE)
+        {
+            nextState.player = BLACK;
+        }
     }
 
-    std::list<Move_t> moves = board.getLegalMoves(state.player);
+    std::list<Move_t> moves = board.getLegalMoves(nextState.player);
     if(moves.empty())
     {
         nextState.board = state.board;
-        nextState.player = CHECKMATE;
-        if(player == state.player)
-        {
-            nextState.player == GET_CHECKMATE;
-        }
+        nextState.score = CHECKMATE;
+        nextState.player = state.player;
         return nextState;
     }
 
-    nextState.player = WHITE;
-    if(state.player == WHITE)
-    {
-        nextState.player = BLACK;
-    }
     nextState.board = board.getBoard();
 
     State_t bestState;
     bestState.board = state.board;
     bestState.player = state.player;
     bestState.move = state.move;
-    bestState.score = nextState.score;
+    bestState.score = 0;
 
     auto it = moves.begin();
+    bestState.move = *it;
     nextState.move = *it;
-    bestState.score += minimax(nextState, depth).score;
+    if(nextState.player == player)
+    {
+        bestState.score += minimax(nextState, depth).score;
+    }
+    else
+    {
+        bestState.score += minimax(nextState, depth).score;
+    }
     while(++it != moves.end())
     {
         nextState.move = *it;
         State_t newState = minimax(nextState, depth);
         if(nextState.player == player)
         {
-            if(nextState.score > bestState.score)
+            if(newState.score > bestState.score)
             {
-                bestState.score = nextState.score;
+                bestState.score = newState.score;
+                bestState.move = newState.move;
             }
         }
         else
         {
-            if(nextState.score < bestState.score)
+            if(newState.score < bestState.score)
             {
-                bestState.score = nextState.score;
+                bestState.score = newState.score;
+                bestState.move = newState.move;
             }
         }
     }
+
+    //std::cout << '(' << bestState.move.start.x << ", " << bestState.move.start.y << ") to (" << bestState.move.end.x << ", " << bestState.move.end.y << "): " << bestState.score << '\n';
     
     return bestState;
 }
