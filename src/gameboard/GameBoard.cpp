@@ -234,24 +234,18 @@ void GameBoard_t::performMove(Move_t& move)
 */
 bool GameBoard_t::testMove(Move_t& move)
 {
-    IO io;
     std::string s = serializeBoard();
-    io.printBoard(s);
-    //Piece_t* endPiece = board[move.end.y][move.end.x];
-    //Piece_t* startPiece = board[move.start.y][move.start.x];
-    //Piece_t* emptySpace = new Empty_t();
-    //board[move.end.y][move.end.x] = startPiece;
-    //board[move.start.y][move.start.x] = emptySpace;
-    ////std::cout << "1.1\n";
-    s = serializeBoard();
-    io.printBoard(s);
-    ////std::cout << serializeBoard() << '\n';
-    //bool inCheck = isInCheck(startPiece -> getColor());
-    bool inCheck = isInCheck(WHITE);
+    Piece_t* endPiece = board[move.end.y][move.end.x];
+    Piece_t* startPiece = board[move.start.y][move.start.x];
+    Piece_t* emptySpace = new Empty_t();
+
+    board[move.end.y][move.end.x] = startPiece;
+    board[move.start.y][move.start.x] = emptySpace;
+    bool inCheck = isInCheck(startPiece -> getColor());
     ////std::cout << "1.2\n";
-    //board[move.end.y][move.end.x] = endPiece;
-    //board[move.start.y][move.start.x] = startPiece;
-    //delete emptySpace;
+    board[move.end.y][move.end.x] = endPiece;
+    board[move.start.y][move.start.x] = startPiece;
+    delete emptySpace;
     return !inCheck;
 }
 

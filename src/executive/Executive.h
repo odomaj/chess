@@ -10,8 +10,8 @@ class Executive
     Executive();
     void run();
     private:
-    IO io;
-    GameBoard_t board;
+    IO* io;
+    GameBoard_t* board;
 };
 
 #endif
