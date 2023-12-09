@@ -8,6 +8,11 @@ GameBoard_t::GameBoard_t()
     set();
 }
 
+GameBoard_t::GameBoard_t(const StaticBoard_t& board)
+{
+    generateBoard(board);
+}
+
 GameBoard_t::~GameBoard_t()
 {
     clear();
@@ -260,4 +265,65 @@ bool GameBoard_t::move(Move_t& move, char color)
         }
     }
     return false;
+}
+
+void GameBoard_t::generateBoard(const StaticBoard_t& board_)
+{
+    Tile_t tile;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            tile.x = j;
+            tile.y = i;
+            board[i][j] = generatePiece(board_.pieces[i][j], tile);
+        }
+    }
+}
+
+Piece_t* GameBoard_t::generatePiece(char serializedPiece, Tile_t tile)
+{
+    switch(serializedPiece)
+    {
+    case WHITE_PAWN:
+    {
+        Piece_t* piece = new Pawn_t(WHITE);
+        if(tile.y != 1)
+        {
+            piece -> move();
+        }
+        return piece;
+    }
+    case WHITE_ROOK:
+        return new Rook_t(WHITE);
+    case WHITE_KNIGHT:
+        return new Knight_t(WHITE);
+    case WHITE_BISHOP:
+        return new Bishop_t(WHITE);
+    case WHITE_QUEEN:
+        return new Queen_t(WHITE);
+    case WHITE_KING:
+        return new King_t(WHITE);
+    case BLACK_PAWN:
+    {
+        Piece_t* piece = new Pawn_t(BLACK);
+        if(tile.y != 1)
+        {
+            piece -> move();
+        }
+        return piece;
+    }
+    case BLACK_ROOK:
+        return new Rook_t(BLACK);
+    case BLACK_KNIGHT:
+        return new Knight_t(BLACK);
+    case BLACK_BISHOP:
+        return new Bishop_t(BLACK);
+    case BLACK_QUEEN:
+        return new Queen_t(BLACK);
+    case BLACK_KING:
+        return new King_t(BLACK);
+    default:
+        return new Empty_t();
+    }
 }
