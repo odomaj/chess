@@ -254,7 +254,7 @@ bool GameBoard_t::testMove(Move_t& move)
     if the move is possible, perform the move and return true
     otherwise return false
 */
-bool GameBoard_t::move(Move_t& move, char color)
+bool GameBoard_t::move(const Move_t& move, char color)
 {
     std::list<Move_t> moves = getLegalMoves(color);
     for(auto it = moves.begin(); it != moves.end(); it++)

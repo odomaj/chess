@@ -21,7 +21,7 @@ class GameBoard_t
     ~GameBoard_t();
     void reset();
     std::string serializeBoard(); 
-    bool move(Move_t& move, char color);
+    bool move(const Move_t& move, char color);
     // returns a static version of the board layout
     StaticBoard_t getBoard();
     // get all moves, accounting for check

@@ -11,9 +11,10 @@ typedef struct
     Move_t move;
     StaticBoard_t board;
     int32_t score;
+    char player;
 } State_t;
 
-const uint32_t SEARCH_DEPTH = 1;
+const uint32_t MAX_SEARCH_DEPTH = 1;
 
 const int32_t CAPTURE_PAWN = 1;
 const int32_t CAPTURE_ROOK = 2;

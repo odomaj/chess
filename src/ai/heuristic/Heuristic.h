@@ -9,8 +9,8 @@ class Heuristic
     public:
     Heuristic();
     ~Heuristic();
+    int32_t heuristic(GameBoard_t& board, Move_t move, char player);
     private:
-
 };
 
 #endif
