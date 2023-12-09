@@ -10,6 +10,7 @@ class IO
     public:
     IO();
     void printBoard(const std::string& serializedBoard);
+    Move_t getMove();
 };
 
 #endif

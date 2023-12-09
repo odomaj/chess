@@ -1,6 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include "GameBoard.h"
+#include "../io/IO.h"
 
 GameBoard_t::GameBoard_t()
 {
@@ -45,7 +46,7 @@ void GameBoard_t::set()
             board[i][j] = new Empty_t();
         }
     }
-
+    getBoard();
 }
 
 void GameBoard_t::reset()
@@ -111,7 +112,9 @@ std::list<Move_t> GameBoard_t::getAllMoves()
 std::list<Move_t> GameBoard_t::getAllMoves(char color)
 {
     std::list<Move_t> moves;
+    //std::cout << "0.0\n";
     StaticBoard_t staticBoard = getBoard();
+    //std::cout << "0.1\n";
     for(int i = 0; i < 8; i++)
     {
         for(int j = 0; j < 8; j++)
@@ -140,6 +143,7 @@ StaticBoard_t GameBoard_t::getBoard()
     {
         for(int j = 0; j < 8; j++)
         {
+            //std::cout << board[i][j] -> serialize() << ' ' << i << ' ' << j << '\n';
             staticBoard.colors[i][j] = board[i][j] -> getColor();
             staticBoard.pieces[i][j] = board[i][j] -> serialize();
         }
@@ -160,7 +164,7 @@ bool GameBoard_t::isInCheck(char color)
         opponentsColor = BLACK;
     }
     std::list<Move_t> opponentsMoves = getAllMoves(opponentsColor);
-    
+    //std::cout << "-1\n";
     Tile_t kingTile;
     for(int i = 0; i < 8; i++)
     {
@@ -177,7 +181,7 @@ bool GameBoard_t::isInCheck(char color)
             }
         }
     }
-
+    //std::cout << "-2\n";
     for(auto it = opponentsMoves.begin(); it != opponentsMoves.end(); it++)
     {
         if(it -> end.x == kingTile.x && it -> end.y == kingTile.y)
@@ -194,10 +198,13 @@ bool GameBoard_t::isInCheck(char color)
 */
 std::list<Move_t> GameBoard_t::getLegalMoves(char color)
 {
+    //std::cout << "0\n";
     std::list<Move_t> allMoves = getAllMoves(color);
+    //std::cout << "2getlegal\n";
     auto it = allMoves.begin();
     while(it != allMoves.end())
     {
+        //std::cout << it -> start.x << it -> start.y << it -> end.x << it -> end.y << '\n';
         if(!testMove(*it))
         {
             allMoves.erase(it);
@@ -227,15 +234,24 @@ void GameBoard_t::performMove(Move_t& move)
 */
 bool GameBoard_t::testMove(Move_t& move)
 {
-    Piece_t* endPiece = board[move.end.y][move.end.x];
-    Piece_t* startPiece = board[move.start.y][move.start.x];
-    Piece_t* emptySpace = new Empty_t();
-    board[move.end.y][move.end.x] = startPiece;
-    board[move.start.y][move.start.x] = emptySpace;
-    bool inCheck = isInCheck(startPiece -> getColor());
-    board[move.end.y][move.end.x] = endPiece;
-    board[move.start.y][move.start.x] = startPiece;
-    delete emptySpace;
+    IO io;
+    std::string s = serializeBoard();
+    io.printBoard(s);
+    //Piece_t* endPiece = board[move.end.y][move.end.x];
+    //Piece_t* startPiece = board[move.start.y][move.start.x];
+    //Piece_t* emptySpace = new Empty_t();
+    //board[move.end.y][move.end.x] = startPiece;
+    //board[move.start.y][move.start.x] = emptySpace;
+    ////std::cout << "1.1\n";
+    s = serializeBoard();
+    io.printBoard(s);
+    ////std::cout << serializeBoard() << '\n';
+    //bool inCheck = isInCheck(startPiece -> getColor());
+    bool inCheck = isInCheck(WHITE);
+    ////std::cout << "1.2\n";
+    //board[move.end.y][move.end.x] = endPiece;
+    //board[move.start.y][move.start.x] = startPiece;
+    //delete emptySpace;
     return !inCheck;
 }
 
@@ -246,7 +262,9 @@ bool GameBoard_t::testMove(Move_t& move)
 */
 bool GameBoard_t::move(Move_t& move, char color)
 {
+    //std::cout << "1\n";
     std::list<Move_t> moves = getLegalMoves(color);
+    //std::cout << "2\n";
     for(auto it = moves.begin(); it != moves.end(); it++)
     {
         if(*it == move)
