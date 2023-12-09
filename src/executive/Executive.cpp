@@ -11,6 +11,8 @@ Executive::~Executive()
 {
     delete board;
     delete io;
+    board = nullptr;
+    io = nullptr;
 }
 
 void Executive::run()

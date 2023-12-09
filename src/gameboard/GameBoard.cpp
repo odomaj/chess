@@ -67,6 +67,7 @@ void GameBoard_t::clear()
         for(int j = 0; j < 8; j++)
         {
             delete board[i][j];
+            board[i][j] = nullptr;
         }
     }
 }
@@ -244,6 +245,7 @@ bool GameBoard_t::testMove(Move_t& move)
     board[move.end.y][move.end.x] = endPiece;
     board[move.start.y][move.start.x] = startPiece;
     delete emptySpace;
+    emptySpace = nullptr;
     return !inCheck;
 }
 
