@@ -67,13 +67,27 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
         }
     }
 
-    std::list<Move_t> moves = board.getLegalMoves(nextState.player);
-    if(moves.empty())
+    std::list<Move_t> all_moves = board.getLegalMoves(nextState.player);
+
+    if(all_moves.empty())
     {
         nextState.board = state.board;
-        nextState.score = CHECKMATE;
+        nextState.score = -1 * CHECKMATE;
         nextState.player = state.player;
         return nextState;
+    }
+
+    std::list<Move_t> moves;
+    for(auto it = all_moves.begin(); it != all_moves.end(); it++)
+    {
+        if(rand() & 1)
+        {
+            moves.push_back(*it);
+        }
+        else
+        {
+            moves.push_front(*it);
+        }
     }
 
     nextState.board = board.getBoard();

@@ -24,13 +24,21 @@ void Executive::run()
    {
         StaticBoard_t staticBoard = board -> getBoard();
         Move_t move = minimax -> getMove(staticBoard, WHITE);
-        board -> move(move, WHITE);
+        if(!board -> move(move, WHITE))
+        {
+            std::cout << "GAME OVER\n";
+            break;
+        }
         std::string serializedBoard = board -> serializeBoard();
         io -> printBoard(serializedBoard);
 
         staticBoard = board -> getBoard();
         move = minimax -> getMove(staticBoard, BLACK);
-        board -> move(move, BLACK);
+        if(!board -> move(move, BLACK))
+        {
+            std::cout << "GAME OVER\n";
+            break;
+        }
         serializedBoard = board -> serializeBoard();
         io -> printBoard(serializedBoard);
    }
