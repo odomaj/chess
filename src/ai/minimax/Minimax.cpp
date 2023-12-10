@@ -14,7 +14,7 @@ Minimax::~Minimax()
 
 Move_t Minimax::getMove(const StaticBoard_t& board, char color)
 {
-    player = BLACK;
+    player = color;
     alpha = INT32_MIN;
     beta = INT32_MAX;
     State_t state;
@@ -40,7 +40,6 @@ Move_t Minimax::getMove(const StaticBoard_t& board, char color)
 State_t Minimax::minimax(const State_t& state, int16_t depth)
 {
     GameBoard_t board = GameBoard_t(state.board);
-
     State_t nextState;
     nextState.score = 0;
     nextState.player = state.player;
@@ -57,7 +56,7 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
 
         if(!board.move(state.move, state.player))
         {
-            std::cout << "bad\n";
+            // should never occur
             return nextState;
         }
 
@@ -91,10 +90,7 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
     if(nextState.player == player)
     {
         bestState.score += minimax(nextState, depth).score;
-        if(bestState.score > alpha)
-        {
-            alpha = bestState.score;
-        }
+        alpha = max(alpha, bestState.score);
         if(alpha > beta)
         {
             return bestState;
@@ -103,10 +99,7 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
     else
     {
         bestState.score += minimax(nextState, depth).score;
-        if(bestState.score < beta)
-        {
-            beta= bestState.score;
-        }
+        beta = min(beta, bestState.score);
         if(beta < alpha)
         {
             return bestState;
@@ -122,10 +115,7 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
             {
                 bestState.score = newState.score;
                 bestState.move = newState.move;
-                if(bestState.score > alpha)
-                {
-                    alpha = bestState.score;
-                }
+                alpha = max(alpha, bestState.score);
                 if(alpha > beta)
                 {
                     return bestState;
@@ -142,6 +132,7 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
                 {
                     beta= bestState.score;
                 }
+                beta = min(beta, bestState.score);
                 if(beta < alpha)
                 {
                     return bestState;
@@ -150,7 +141,5 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
         }
     }
 
-    //std::cout << '(' << bestState.move.start.x << ", " << bestState.move.start.y << ") to (" << bestState.move.end.x << ", " << bestState.move.end.y << "): " << bestState.score << '\n';
-    
     return bestState;
 }

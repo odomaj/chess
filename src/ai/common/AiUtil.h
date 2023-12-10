@@ -14,23 +14,18 @@ typedef struct
     char player;
 } State_t;
 
-const uint32_t MAX_SEARCH_DEPTH = 4;
+const uint32_t MAX_SEARCH_DEPTH = 10;
 
 const int32_t CAPTURE_EMPTY = 0;
-const int32_t CAPTURE_PAWN = 10;
-const int32_t CAPTURE_ROOK = 20;
-const int32_t CAPTURE_KNIGHT = 20;
-const int32_t CAPTURE_BISHOP = 20;
-const int32_t CAPTURE_QUEEN = 35;
-const int32_t CHECK = 50;
-const int32_t CHECKMATE = 1000;
+const int32_t CAPTURE_PAWN = 50;
+const int32_t CAPTURE_ROOK = 150;
+const int32_t CAPTURE_KNIGHT = 150;
+const int32_t CAPTURE_BISHOP = 150;
+const int32_t CAPTURE_QUEEN = 300;
+const int32_t CHECK = 500;
+const int32_t CHECKMATE = 5000;
 
-const int32_t LOSE_PAWN = -1;
-const int32_t LOSE_ROOK = -2;
-const int32_t LOSE_KNIGHT = -2;
-const int32_t LOSE_BISHOP = -2;
-const int32_t LOSE_QUEEN = -4;
-const int32_t GET_CHECK = -10;
-const int32_t GET_CHECKMATE = -100;
+int32_t max(int32_t num1, int32_t num2);
+int32_t min(int32_t num1, int32_t num2);
 
 #endif

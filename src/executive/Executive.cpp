@@ -20,20 +20,18 @@ Executive::~Executive()
 
 void Executive::run()
 {
-    StaticBoard_t staticBoard = board -> getBoard();
-    Move_t move = minimax -> getMove(staticBoard, WHITE);
-    board -> move(move, WHITE);
-    std::string serializedBoard = board -> serializeBoard();
-    io -> printBoard(serializedBoard);
-    /*
-    while(true)
-    {
+   while(true)
+   {
+        StaticBoard_t staticBoard = board -> getBoard();
+        Move_t move = minimax -> getMove(staticBoard, WHITE);
+        board -> move(move, WHITE);
         std::string serializedBoard = board -> serializeBoard();
         io -> printBoard(serializedBoard);
-        Move_t move = io -> getMove();
-        board -> move(move, WHITE);
+
+        staticBoard = board -> getBoard();
+        move = minimax -> getMove(staticBoard, BLACK);
+        board -> move(move, BLACK);
         serializedBoard = board -> serializeBoard();
         io -> printBoard(serializedBoard);
-    }
-    */
+   }
 }

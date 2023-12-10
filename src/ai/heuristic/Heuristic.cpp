@@ -23,7 +23,7 @@ int32_t Heuristic::heuristic(const StaticBoard_t& staticBoard, Move_t move, char
 
     std::list<Move_t> moves = board.getLegalMoves(player);
 
-    int32_t score = moves.size() >> 4;
+    int32_t score = moves.size() >> 2;
 
     char opponent = WHITE;
     if(player == WHITE)
@@ -72,7 +72,5 @@ int32_t Heuristic::heuristic(const StaticBoard_t& staticBoard, Move_t move, char
             break;
     }
     
-    //std::cout << '(' << move.start.x << ", " << move.start.y << ") to (" << move.end.x << ", " << move.end.y << "): " << score << '\n';
-
     return score;
 }

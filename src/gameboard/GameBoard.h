@@ -32,7 +32,7 @@ class GameBoard_t
     void clear();
     void set();
     void performMove(Move_t& move);
-    bool testMove(Move_t& move);
+    bool testMove(Move_t move);
     // get all moves for every piece on the board
     std::list<Move_t> getAllMoves();
     // get all moves for every piece of the specified color on the board

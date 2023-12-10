@@ -205,7 +205,7 @@ std::list<Move_t> GameBoard_t::getLegalMoves(char color)
     {
         if(!testMove(*it))
         {
-            allMoves.erase(it);
+            it = allMoves.erase(it);
         }
         else{
             it++;
@@ -232,7 +232,7 @@ void GameBoard_t::performMove(Move_t& move)
     returns true if move is vaild
     returns false if the move leads to a check
 */
-bool GameBoard_t::testMove(Move_t& move)
+bool GameBoard_t::testMove(Move_t move)
 {
     std::string s = serializeBoard();
     Piece_t* endPiece = board[move.end.y][move.end.x];
