@@ -91,10 +91,26 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
     if(nextState.player == player)
     {
         bestState.score += minimax(nextState, depth).score;
+        if(bestState.score > alpha)
+        {
+            alpha = bestState.score;
+        }
+        if(alpha > beta)
+        {
+            return bestState;
+        }
     }
     else
     {
         bestState.score += minimax(nextState, depth).score;
+        if(bestState.score < beta)
+        {
+            beta= bestState.score;
+        }
+        if(beta < alpha)
+        {
+            return bestState;
+        }
     }
     while(++it != moves.end())
     {
@@ -106,6 +122,14 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
             {
                 bestState.score = newState.score;
                 bestState.move = newState.move;
+                if(bestState.score > alpha)
+                {
+                    alpha = bestState.score;
+                }
+                if(alpha > beta)
+                {
+                    return bestState;
+                }
             }
         }
         else
@@ -114,6 +138,14 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
             {
                 bestState.score = newState.score;
                 bestState.move = newState.move;
+                if(bestState.score < beta)
+                {
+                    beta= bestState.score;
+                }
+                if(beta < alpha)
+                {
+                    return bestState;
+                }
             }
         }
     }
