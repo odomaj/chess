@@ -14,7 +14,7 @@ typedef struct
     char player;
 } State_t;
 
-const uint32_t MAX_SEARCH_DEPTH = 15;
+const uint32_t MAX_SEARCH_DEPTH = 3;
 
 const int32_t CAPTURE_EMPTY = 0;
 const int32_t CAPTURE_PAWN = 50;

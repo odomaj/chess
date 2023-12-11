@@ -18,7 +18,7 @@ class Minimax
     int32_t alpha;
     // max score that the player could potentially recieve
     int32_t beta;
-    State_t minimax(const State_t& state, int16_t depth);
+    State_t minimax(const State_t& state, int16_t depth, int32_t heuristicValue);
 };
 
 #endif

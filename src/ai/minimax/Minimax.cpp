@@ -25,7 +25,10 @@ Move_t Minimax::getMove(const StaticBoard_t& board, char color)
     state.move.start.y = -1;
     state.move.end.x = -1;
     state.move.end.y = -1;
-    return minimax(state, 1).move;
+    //return minimax(state, 1, 0).move;
+    State_t check = minimax(state, 1, 0);
+    //std::cout << check.score << '\n';
+    return check.move;
 }
 
 /*
@@ -34,24 +37,42 @@ Move_t Minimax::getMove(const StaticBoard_t& board, char color)
     otherwise update the board with the given move (if not first call)
     find all possible moves for the updated board
     call minimax on the new board with every possible move
-    sum the optimum resulting minimax with the already calculated heuristic
+    sum the optimum resulting minimax with the already calculated heuristic on the way down
     return that sum and the move that was passed to this function
 */
-State_t Minimax::minimax(const State_t& state, int16_t depth)
+State_t Minimax::minimax(const State_t& state, int16_t depth, int32_t heuristicValue)
 {
     GameBoard_t board = GameBoard_t(state.board);
     State_t nextState;
-    nextState.score = 0;
+    nextState.score = heuristicValue;
     nextState.player = state.player;
-
+    //std::cout << state.player << ':' << heuristicValue << ':' << depth << '\n';
     if(state.move.start.x != -1 || state.move.start.y != -1 || state.move.end.x != -1 || state.move.end.y != -1)
     {
         if(++depth > MAX_SEARCH_DEPTH)
         {
             StaticBoard_t staticBoard = board.getBoard();
-            nextState.score = heuristic.heuristic(staticBoard, state.move, state.player);
+            if(state.player == player)
+            {
+                nextState.score = heuristic.heuristic(staticBoard, state.move, state.player) + heuristicValue;
+            }
+            else
+            {
+                nextState.score = heuristicValue - heuristic.heuristic(staticBoard, state.move, state.player);
+            }
             nextState.move = state.move;
             return nextState;
+        }
+
+        if(state.player == player)
+        {
+            StaticBoard_t staticBoard = board.getBoard();
+            heuristicValue += heuristic.heuristic(staticBoard, state.move, state.player);
+        }
+        else
+        {
+            StaticBoard_t staticBoard = board.getBoard();
+            heuristicValue -= heuristic.heuristic(staticBoard, state.move, state.player);
         }
 
         if(!board.move(state.move, state.player))
@@ -96,33 +117,15 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
     bestState.board = state.board;
     bestState.player = state.player;
     bestState.move = state.move;
-    bestState.score = 0;
 
     auto it = moves.begin();
     bestState.move = *it;
     nextState.move = *it;
-    if(nextState.player == player)
-    {
-        bestState.score += minimax(nextState, depth).score;
-        alpha = max(alpha, bestState.score);
-        if(alpha > beta)
-        {
-            return bestState;
-        }
-    }
-    else
-    {
-        bestState.score += minimax(nextState, depth).score;
-        beta = min(beta, bestState.score);
-        if(beta < alpha)
-        {
-            return bestState;
-        }
-    }
+    
     while(++it != moves.end())
     {
         nextState.move = *it;
-        State_t newState = minimax(nextState, depth);
+        State_t newState = minimax(nextState, depth, heuristicValue);
         if(nextState.player == player)
         {
             if(newState.score > bestState.score)
@@ -154,6 +157,6 @@ State_t Minimax::minimax(const State_t& state, int16_t depth)
             }
         }
     }
-
+    //std::cout << bestState.score << ':' << bestState.player << '\n';
     return bestState;
 }
