@@ -20,9 +20,4 @@ typedef struct
 
 } BoardMessage_t;
 
-void sendBoard(const StaticBoard_t& board);
-void sendACK();
-void sendMove(const Move_t& move);
-void requestMove();
-
 #endif
