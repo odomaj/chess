@@ -1,4 +1,4 @@
-#include "Util.h"
+#include "../common/Util.h"
 
 #include <cstdint>
 
@@ -10,14 +10,24 @@ typedef struct
 	uint16_t magicWord;
 	uint16_t id;
 	uint16_t length;
-
 } MessageHeader_t;
 
 typedef struct
 {
 	MessageHeader_t messageHeader;
 	StaticBoard_t board;
-
 } BoardMessage_t;
+
+typedef struct
+{
+	MessageHeader_t messageHeader;
+	Move_t move;
+} MoveMessage_t;
+
+typedef struct
+{
+	MessageHeader_t messageHeader;
+	uint16_t ack;
+} ACKMessage_t;
 
 #endif
