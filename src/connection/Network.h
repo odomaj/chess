@@ -1,13 +1,15 @@
-#ifndef NETWORK_H
-#define NETWORK_H
-
 #include <winsock2.h>
 #include <WS2tcpip.h>
 #include <stdexcept>
 #include <iostream>
+#include <vector>
+#include "../connection/MessageProtocol.h"
 #include "../gameboard/GameBoard.h"
 #include "../io/IO.h"
 #pragma comment(lib, "ws2_32.lib")
+
+#ifndef NETWORK_H
+#define NETWORK_H
 
 // Initialize Winsock
 void initializeWinsock();

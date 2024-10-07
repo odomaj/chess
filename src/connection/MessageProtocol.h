@@ -1,6 +1,7 @@
 #include "../common/Util.h"
 
 #include <cstdint>
+#include <cstring>
 
 #ifndef MESSAGEPROTOCOL_H_
 #define MESSAGEPROTOCOL_H_
@@ -30,4 +31,12 @@ typedef struct
 	uint16_t ack;
 } ACKMessage_t;
 
+void serializeMessageHeader(char* buffer, MessageHeader_t* header);
+void serializeBoardMessage(char* buffer, BoardMessage_t* board);
+void serializeMoveMessage(char* buffer, MoveMessage_t* moveMessage);
+void serializeACKMessage(char* buffer, ACKMessage_t* ackMessage);
+void deserializeMessageHeader(char* buffer, MessageHeader_t* header);
+void deserializeBoardMessage(char* buffer, BoardMessage_t* board);
+void deserializeMoveMessage(char* buffer, MoveMessage_t* moveMessage);
+void deserializeACKMessage(char* buffer, ACKMessage_t* ackMessage);
 #endif
