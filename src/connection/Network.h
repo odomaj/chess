@@ -6,6 +6,7 @@
 #include "../connection/MessageProtocol.h"
 #include "../gameboard/GameBoard.h"
 #include "../io/IO.h"
+#include "../common/Util.h"
 #pragma comment(lib, "ws2_32.lib")
 
 #ifndef NETWORK_H

@@ -1,4 +1,3 @@
-
 import os
 
 print('Building project...')
@@ -14,7 +13,6 @@ if not os.path.exists(build_dir):
 os.chdir(build_dir)
 
 # Compile the client and server programs
-# Note: Adjust the list of source files as necessary
 client_sources = [
     '../src/connection/Client.cpp',
     '../src/connection/Network.cpp',
